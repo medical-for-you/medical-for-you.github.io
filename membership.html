@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>استمارة الانضمام للمنظمة</title>
+    <link rel="icon" href="medical.png" type="image/png">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;700&display=swap" rel="stylesheet">
 
@@ -29,6 +30,16 @@
         .active-link { color: #ffb703 !important; }
         .main-nav i { margin-left: 5px; }
 
+        
+         /* === تصميم لوقو داخل الموقع === */
+        .site-logo {
+    width: 60px; /* هنا تقدر تكبر وتصغر الشعار بتغيير الرقم */
+    height: auto;
+    vertical-align: middle; /* عشان الشعار يكون في نفس خط النص بالضبط */
+    margin-left: 12px; /* مسافة بسيطة بين الشعار والاسم */
+    border-radius: 50%; /* لو عاوز الشعار يكون دائري، لو عاوزه مربع امسح السطر ده */
+}
+        
         /* === تصميم الاستمارة === */
         .form-container {
             max-width: 850px;
@@ -94,7 +105,7 @@
 
     <header class="site-header">
         <div class="logo-area">
-            <h1> منظمة ميديكال فور يو <i class="fas fa-heartbeat text-yellow"></i></h1>
+           <h1><img src="medical.png" alt="شعار المنظمة" class="site-logo"> منظمة ميديكال فور يو</h1>
             <p>رعايتك الصحية هي أولويتنا</p>
         </div>
         <nav class="main-nav">
@@ -263,5 +274,8 @@
         }
         form.addEventListener("submit", handleSubmit);
     </script>
+      <footer style="background-color: #222; color: white; text-align: center; padding: 20px 0; font-family: 'Cairo', sans-serif;">
+        <p style="margin: 0;">&copy; 2026 جميع الحقوق محفوظة لمنظمة ميديكال فور يو.</p>
+    </footer>
 </body>
 </html>

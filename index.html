@@ -4,41 +4,47 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>ميديكال فور يو | Medical For You</title>
-    
+    <link rel="icon" href="medical.png" type="image/png">
     <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700&display=swap" rel="stylesheet">
-    
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 
     <style>
-        /* 2. تفعيل التمرير السلس وضبط الخط الجديد */
         html { 
             scroll-behavior: smooth; 
-            scroll-padding-top: 100px; /* لضمان عدم تغطية الشريط العلوي للعناوين عند النقر */
+            scroll-padding-top: 100px; 
         }
         
         body { 
-            font-family: 'Cairo', sans-serif; /* تطبيق الخط هنا */
+            font-family: 'Cairo', sans-serif; 
             line-height: 1.8; 
             margin: 0; 
             padding: 0; 
             background-color: #f4f7f6; 
         }
 
-        /* 3. تثبيت شريط التنقل العلوي (Sticky Header) */
         header { 
             background-color: #005f73; 
             color: white; 
             padding: 15px 20px; 
             text-align: center; 
-            position: sticky; /* هذه هي خاصية التثبيت */
+            position: sticky; 
             top: 0; 
             z-index: 1000; 
             box-shadow: 0 4px 6px rgba(0,0,0,0.1);
         }
-        header h1 { margin: 0; font-size: 28px; }
+        
+        /* هذا هو كود تنسيق الشعار ليكون بحجم احترافي ومضبوط مع النص */
+        .site-logo {
+            width: 50px; 
+            height: auto;
+            vertical-align: middle; 
+            margin-left: 10px; 
+            border-radius: 5px; /* يضيف انحناء بسيط لحواف الصورة */
+        }
+
+        header h1 { margin: 0; font-size: 28px; display: flex; align-items: center; justify-content: center; }
         header p { margin: 5px 0 15px 0; font-size: 14px; color: #e0f2f1; }
         
-        /* تنسيق قائمة التنقل */
         nav { display: flex; justify-content: center; flex-wrap: wrap; gap: 20px; }
         nav a { color: white; text-decoration: none; font-size: 16px; font-weight: 600; transition: color 0.3s; }
         nav a:hover { color: #ffb703; }
@@ -47,7 +53,6 @@
         section { margin-bottom: 40px; background: white; padding: 30px; border-radius: 10px; box-shadow: 0 4px 10px rgba(0,0,0,0.05); }
         h2 { color: #0a9396; border-bottom: 2px solid #e9ecef; padding-bottom: 10px; font-weight: 700; }
         
-        /* تنسيقات معرض الصور */
         .gallery-container {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
@@ -68,24 +73,20 @@
         }
         .image-caption { text-align: center; font-size: 0.9em; color: #555; margin-top: 8px; font-weight: 600; }
 
-        /* تنسيقات الأسئلة الشائعة */
         details { background-color: #f8f9fa; padding: 15px; margin-bottom: 15px; border-radius: 8px; border: 1px solid #dee2e6; cursor: pointer; transition: background 0.3s; }
         details:hover { background-color: #e9ecef; }
         summary { font-weight: 700; color: #005f73; outline: none; font-size: 1.1em; }
         details p { margin-top: 15px; color: #444; padding-right: 15px; border-right: 3px solid #0a9396; }
 
-        /* تنسيق النماذج */
         label { font-weight: 600; color: #333; }
         input, textarea, select { width: 100%; padding: 12px; margin-top: 8px; margin-bottom: 20px; border: 1px solid #ccc; border-radius: 6px; box-sizing: border-box; font-family: 'Cairo', sans-serif; }
         input[type="submit"] { background-color: #0a9396; color: white; border: none; cursor: pointer; font-size: 18px; font-weight: 700; transition: background 0.3s; }
         input[type="submit"]:hover { background-color: #005f73; }
 
-        /* تنسيق القوائم مع الأيقونات */
         ul.services-list { list-style-type: none; padding: 0; }
         ul.services-list li { margin-bottom: 15px; font-size: 1.1em; }
         ul.services-list i { color: #0a9396; margin-left: 10px; font-size: 1.2em; }
 
-        /* استجابة الهواتف */
         @media (max-width: 768px) {
             main { padding: 10px; }
             section { padding: 20px; }
@@ -99,7 +100,7 @@
 <body>
 
     <header>
-        <h1><i class="fa-solid fa-heart-pulse" style="color: #ffb703; margin-left: 10px;"></i>منظمة ميديكال فور يو</h1>
+        <h1><img src="medical.png" alt="شعار المنظمة" class="site-logo"> منظمة ميديكال فور يو</h1>
         <p>رعايتك الصحية هي أولويتنا</p>
         <nav>
             <a href="#home"><i class="fa-solid fa-house"></i> الرئيسية</a>
@@ -137,15 +138,15 @@
             <p>جانب من أنشطة المنظمة وجهود الكوادر الطبية:</p>
             <div class="gallery-container">
                 <div>
-                    <img src="team.jpg.jpg" alt="طاقم التمريض" class="gallery-item">
+                    <img src="team.jpg" alt="طاقم التمريض" class="gallery-item">
                     <div class="image-caption">طاقم التمريض أثناء تقديم الرعاية</div>
                 </div>
                 <div>
-                    <img src="nursing_care.png.jpg" alt="العناية التمريضية" class="gallery-item">
+                    <img src="nursing_care.jpg" alt="العناية التمريضية" class="gallery-item">
                     <div class="image-caption">تطبيق معايير العناية التمريضية</div>
                 </div>
                 <div>
-                    <img src="hospital.jpg.jpg" alt="تدريب المستشفيات" class="gallery-item">
+                    <img src="hospital.jpg"hospital.jpg"" alt="تدريب المستشفيات" class="gallery-item">
                     <div class="image-caption">تدريب الكوادر في المستشفيات</div>
                 </div>
             </div>
@@ -169,15 +170,15 @@
 
         <section id="contact">
             <h2><i class="fa-solid fa-headset" style="margin-left: 10px;"></i>اتصل بنا</h2>
-            <form action="#" method="POST">
+            <form action="https://formspree.io/f/mqeyarbj" method="POST">
                 <label for="name">الاسم الكريم:</label>
-                <input type="text" id="name" name="name" placeholder="اكتب اسمك هنا..." required>
+                <input type="text" id="name" name="الاسم" placeholder="اكتب اسمك هنا..." required>
 
                 <label for="email">البريد الإلكتروني:</label>
-                <input type="email" id="email" name="email" placeholder="example@email.com" required>
+                <input type="email" id="email" name="البريد_الإلكتروني" placeholder="example@email.com" required>
 
                 <label for="message">الرسالة:</label>
-                <textarea id="message" name="message" rows="4" placeholder="كيف يمكننا مساعدتك؟" required></textarea>
+                <textarea id="message" name="الرسالة" rows="4" placeholder="كيف يمكننا مساعدتك؟" required></textarea>
 
                 <input type="submit" value="إرسال رسالتك">
             </form>
