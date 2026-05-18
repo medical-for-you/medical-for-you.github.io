@@ -47,6 +47,8 @@
         <option value="admin">المدير العام</option>
         <option value="user1">د. أحمد</option>
         <option value="user2">الممرض الرشيد</option>
+        <option value="user3">ممرضة مناسك عبد الرحمن </option>
+        <option value="user4">وردة معاذ احمد بابكر</option>
     </select>
 
     <input type="password" id="adminPass" placeholder="كلمة المرور السرية">
@@ -61,10 +63,16 @@
         
         <div class="form-section">
             <label>نوع الحالة</label>
-            <select id="caseType">
+            <select id="caseType" onchange="toggleBottlesInput()">
                 <option value="donor">متبرع متاح (لون أخضر)</option>
                 <option value="urgent">طلب عاجل (لون برتقالي/أحمر)</option>
             </select>
+
+            <!-- الإضافة الجديدة: حقل عدد القزازات (مخفي افتراضياً لأن المتبرع متاح هو الافتراضي) -->
+            <div id="bottlesWrapper" style="display: none;">
+                <label>عدد الزجاجات المطلوبة</label>
+                <input type="number" id="bloodBottles" placeholder="مثلاً: 2" min="1">
+            </div>
 
             <label>الاسم أو عنوان الطلب</label>
             <input type="text" id="donorName" placeholder="مثلاً: محمد علي أو مطلوب متبرع لعملية">
@@ -119,7 +127,9 @@
     const usersList = {
         "admin": "0960",   // كلمة سر المدير العام
         "user1": "Pass123",      // كلمة سر د. أحمد
-        "user2": "096020"       // كلمة سر الممرض الرشيد
+        "user2": "096020",       // كلمة سر الممرض الرشيد
+        "user3": "1234",
+        "user4": "warda",
     };
 
     function verifyAccess() {
@@ -137,6 +147,18 @@
     }
     // === نهاية كود الحماية ===
 
+    // === النظام الذكي لإظهار/إخفاء حقل القزازات ===
+    function toggleBottlesInput() {
+        const caseType = document.getElementById('caseType').value;
+        const bottlesWrapper = document.getElementById('bottlesWrapper');
+        if (caseType === 'urgent') {
+            bottlesWrapper.style.display = 'block';
+        } else {
+            bottlesWrapper.style.display = 'none';
+        }
+    }
+    // ==============================================
+
     // === متغيرات التحكم بالتعديل ===
     let currentEditKey = null;
     window.bloodDataMap = {}; // تخزين البيانات محلياً للتعديل
@@ -149,13 +171,14 @@
         const phone = document.getElementById('bloodPhone').value;
         const status = document.getElementById('caseType').value;
         const timeNote = document.getElementById('bloodTime').value;
+        const bottles = document.getElementById('bloodBottles').value; // الإضافة الجديدة لسحب بيانات القزازات
 
         if (!name || !phone) return alert("يا الرشيد، املأ الاسم والهاتف!");
 
         if (currentEditKey) {
             // تحديث البيانات الموجودة
             database.ref('blood_bank/' + currentEditKey).update({
-                name, type, loc, phone, status, timeNote,
+                name, type, loc, phone, status, timeNote, bottles,
                 timestamp: Date.now()
             }).then(() => {
                 alert("✅ تم تعديل البيانات في بنك الدم بنجاح!");
@@ -165,7 +188,7 @@
             // الكود الأصلي (إضافة بيانات جديدة) بدون أي حذف
             const newRef = database.ref('blood_bank').push();
             newRef.set({
-                name, type, loc, phone, status, timeNote,
+                name, type, loc, phone, status, timeNote, bottles,
                 timestamp: Date.now()
             }).then(() => {
                 alert("✅ تم النشر في بنك الدم!");
@@ -182,6 +205,9 @@
         document.getElementById('bloodPhone').value = "";
         document.getElementById('caseType').value = "donor";
         document.getElementById('bloodTime').value = "";
+        document.getElementById('bloodBottles').value = ""; // تفريغ حقل القزازات
+        
+        toggleBottlesInput(); // إعادة الإخفاء الذكي
         
         currentEditKey = null;
         
@@ -199,10 +225,13 @@
             const data = child.val();
             window.bloodDataMap[child.key] = data; // حفظ البيانات لزر التعديل
             
+            // إضافة مؤشر صغير يوضح عدد القزازات في اللوحة إذا كان طلباً عاجلاً
+            const bottlesText = (data.status === 'urgent' && data.bottles) ? ` <span style="color:var(--bright-red); font-size: 0.9em;">(${data.bottles} قزازة)</span>` : '';
+
             // الكود الأصلي مع إضافة زر التعديل بجانب زر الحذف
             list.innerHTML += `
                 <div class="data-item">
-                    <span><strong>[${data.type}]</strong> ${data.name}</span>
+                    <span><strong>[${data.type}]</strong> ${data.name}${bottlesText}</span>
                     <div class="action-btns">
                         <button class="btn-edit" onclick="prepareEdit('${child.key}')"><i class="fas fa-edit"></i> تعديل</button>
                         <button class="btn-delete" onclick="deleteData('${child.key}')"><i class="fas fa-trash"></i> حذف</button>
@@ -226,7 +255,10 @@
         document.getElementById('bloodLoc').value = data.loc || "";
         document.getElementById('bloodPhone').value = data.phone || "";
         document.getElementById('bloodTime').value = data.timeNote || "";
+        document.getElementById('bloodBottles').value = data.bottles || ""; // سحب بيانات القزازات
         
+        toggleBottlesInput(); // استدعاء الدالة لضبط الظهور/الإخفاء حسب حالة (status) البيانات المسحوبة
+
         currentEditKey = key;
         
         // تغيير شكل الزر لتنبيه المستخدم أنه يقوم بتعديل وليس إضافة
